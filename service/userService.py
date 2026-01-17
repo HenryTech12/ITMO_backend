@@ -1,8 +1,15 @@
 from models import userModel
 from fastapi import HTTPException, status
+from security import securityConfig
+
 def create_user(data,db):
-    user = db.query(userModel.UserModel).filter(email == data.email).first()
+    user = db.query(userModel.UserModel).filter(userModel.UserModel.email == data.email).first()
     if user:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail='User already exists')
     else:
-        user = userModel.UserModel()
+        if data.password:
+            data.password = securityConfig.password_hash(data.password)
+        user = userModel.UserModel(name=data.name,email=data.email,password_hash=data.password, phone_number=data.phone_number)
+        return user
+    
+    
