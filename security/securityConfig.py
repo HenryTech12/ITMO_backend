@@ -2,6 +2,7 @@ from jose import jwt
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from fastapi.security import HTTPAuthorizationCredentials
+from schema import userSchema
 
 pwd_context = CryptContext(schemes=["argon2"])
 SECRET_KEY=""
@@ -13,16 +14,17 @@ def verify_hash(password_plain,password_hash):
 def password_hash(password_plain):
     return pwd_context.hash(password_plain)
 
-def create_token(data):
+def create_token(data, type):
     iat = datetime.utcnow()
     exp = datetime.utcnow() + timedelta(minutes=EXPIRY_IN_MINUTES)
     payload = {
         "sub": data.email,
         "iat": iat,
-        "exp": exp
+        "exp": exp,
+        "type": type
     }
     token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
-    return token
+    return userSchema.UserToken(access_token=token, token_type=type)
 
 def get_current_user(credentials: HTTPAuthorizationCredentials):
     token = credentials.credentials

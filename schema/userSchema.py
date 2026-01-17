@@ -15,3 +15,6 @@ class UserSchema(BaseModel):
     role: UserRole
     created_at: datetime
     
+class UserToken(BaseModel):
+    access_token: str
+    token_type: str
