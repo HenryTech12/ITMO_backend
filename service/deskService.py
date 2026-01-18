@@ -12,3 +12,5 @@ def get_desks(data,db):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail='An error occurred, when calling api')
     
     
+def get_desk_by_id(id,db):
+    pass

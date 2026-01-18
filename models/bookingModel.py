@@ -4,7 +4,7 @@ from sqlalchemy import Column, Integer,String, DateTime
 
 
     
-class BookingSchema(database.Base):
+class BookingModel(database.Base):
     
     __tablename__="booking"
     

@@ -22,3 +22,10 @@ def login(data,db):
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid User Details')
         else:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='User account not found')
+
+def fetchUser(db,email):
+    user_db = db.query(userModel.UserModel).filter(userModel.UserModel.email == email).first()
+    if user_db:
+        return user_db
+    else:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail='Invalid user detail')
