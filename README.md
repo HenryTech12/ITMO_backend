@@ -1,1 +1,1 @@
-backend system for hardware notification
+A backend system for hardware notification
